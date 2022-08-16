@@ -18,6 +18,7 @@ export const Search = () => {
         try{
             const {data} = await axios.get(`https://pokeapi.co/api/v2/pokemon/${selectedPokemon}`) /* Se puede usar data para acceder directamente o crear un variable y depues usar {variable.data} */
             setData(data)
+            setPokemon('')
         }  
         catch(error){
             setError('No se encontro pokemon')
@@ -28,11 +29,11 @@ export const Search = () => {
     <SearchStyled>
         <h2>PokeAPI</h2>
         <form onSubmit={(e)=> handleSubmit(e, pokemon)} className='search'>
-            <input type="text" onChange={e => setPokemon(e.target.value)}/>
+            <input type="text" onChange={e => setPokemon(e.target.value)} value={pokemon}/>
             <button disabled={!pokemon} type='submit'>BUSCAR</button>
             {error && <h3>{error}</h3>}
         </form>
-        <Card data={data}/>
+        {data ? <Card data={data}/> : <div></div>}        
     </SearchStyled>
   )
 }
